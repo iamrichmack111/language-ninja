@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "language-trainer-ninja"
+name = "language-ninja"
 version = "2.2.0"
 description = "Keyboard-first Textual NLP sentiment training, analysis, notes, and export workstation."
 readme = "README.md"
