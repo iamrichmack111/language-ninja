@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "language-trainer-ninja"
+version = "2.2.0"
+description = "Keyboard-first Textual NLP sentiment training, analysis, notes, and export workstation."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "textual>=0.70",
+  "scikit-learn>=1.3",
+]
+
+[project.scripts]
+language-ninja = "language_ninja.app:main"
+
+[tool.setuptools.packages.find]
+include = ["language_ninja*"]

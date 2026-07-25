@@ -1,0 +1,104 @@
+# 🥷 Language Trainer Ninja v2.2
+
+A keyboard-first Textual NLP workstation for sentiment analysis, model training, dataset inspection, notes, history, SQLite queries, and CSV/JSON export.
+
+## v2.2 model
+
+The bundled model is now a calibrated classical NLP pipeline rather than the earlier small Naive Bayes/logistic baseline:
+
+```text
+Word TF-IDF (1–3 grams) ─┐
+                         ├─ FeatureUnion ─ Linear SVM ─ 5-fold sigmoid calibration ─ probabilities
+Char TF-IDF (3–5 grams) ─┘
+```
+
+Why both feature families:
+
+- Word n-grams capture phrases such as `not good`, `really love`, and longer contrast patterns.
+- Character n-grams improve handling of contractions, punctuation, spelling variation, and unseen word forms.
+- A balanced Linear SVM supplies a strong decision boundary for sparse text.
+- Sigmoid calibration turns SVM margins into class probabilities for the confidence display.
+
+The starter corpus contains **1,500 balanced examples**:
+
+```text
+positive  500
+neutral   500
+negative  500
+```
+
+It includes straightforward sentiment, conversational phrasing, negation, contrast, and neutral operational language.
+
+> The built-in holdout score is useful as a regression check, but the starter corpus contains generated/template-assisted examples. Treat its very high holdout accuracy as an internal sanity metric, not as proof of production-level real-world accuracy.
+
+## Install
+
+```bash
+cd ~/Downloads/language-trainer-ninja-master
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e .
+language-ninja
+```
+
+A trained `models/sentiment_model.pkl` is included, so Analyze can work immediately. Use **Train → Train Model** after changing the dataset.
+
+## Confidence
+
+The TUI displays all three calibrated probabilities:
+
+```text
+Prediction: NEGATIVE • HIGH CONFIDENCE
+Winning probability: 82.8%
+POS 9.5%   NEU 7.6%   NEG 82.8%
+```
+
+UI guidance:
+
+```text
+HIGH       75–100%
+MODERATE   55–74%
+LOW        below 55%
+```
+
+These labels describe the model's probability separation, not a guarantee of correctness.
+
+## Pages
+
+### Analyze
+Paste conversational text and inspect the winning class plus positive, neutral, and negative probabilities. Every prediction is written to History.
+
+### Train
+Train from a `text,label` CSV. The status panel reports row counts, algorithm, feature count, holdout accuracy, macro F1, and per-class precision/recall/F1.
+
+### Dataset
+Inspect the examples used to train the model and export them to CSV or JSON.
+
+### Notes
+Save experiment notes or attach a note to the most recent prediction.
+
+### History
+Review every prediction with **POS / NEU / NEG probabilities** and a HIGH/MODERATE/LOW confidence level.
+
+### Database
+Run read-only `SELECT`, `WITH`, and `PRAGMA` queries against the SQLite database.
+
+### Export
+Export predictions, notes, datasets, and query results to `./exports/`.
+
+## Rebuild the bundled corpus
+
+The deterministic corpus generator is included:
+
+```bash
+python tools/build_starter_corpus.py
+```
+
+Then retrain from the TUI, or use the Python ML module.
+
+## Run tests
+
+```bash
+python -m pytest -q
+```
