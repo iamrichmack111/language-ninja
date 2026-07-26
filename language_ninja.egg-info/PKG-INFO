@@ -1,3 +1,13 @@
+Metadata-Version: 2.4
+Name: language-ninja
+Version: 2.2.1
+Summary: Keyboard-first Textual NLP sentiment training, analysis, notes, and export workstation.
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: textual>=0.70
+Requires-Dist: scikit-learn>=1.3
+Requires-Dist: platformdirs>=4.0
+
 # 🥷 Language Trainer Ninja v2.2
 
 A keyboard-first Textual NLP workstation for sentiment analysis, model training, dataset inspection, notes, history, SQLite queries, and CSV/JSON export.

@@ -21,15 +21,14 @@ from textual.widgets import (
 
 from .ml import load_dataset, load_model, predict, save_model, train_and_evaluate
 from .storage import Storage, export_records, export_table
-
-
-ROOT = Path.cwd()
-DATA_DIR = ROOT / "data"
-MODEL_DIR = ROOT / "models"
-EXPORT_DIR = ROOT / "exports"
-DB_PATH = ROOT / "language_ninja.db"
-DEFAULT_DATASET = DATA_DIR / "propositions.csv"
-DEFAULT_MODEL = MODEL_DIR / "sentiment_model.pkl"
+from .paths import (
+    APP_DIR,
+    DB_PATH,
+    DEFAULT_DATASET,
+    DEFAULT_MODEL,
+    EXPORT_DIR,
+    bootstrap_user_files,
+)
 
 
 class LanguageNinja(App):
@@ -66,6 +65,7 @@ class LanguageNinja(App):
 
     def __init__(self):
         super().__init__()
+        bootstrap_user_files()
         self.storage = Storage(DB_PATH)
         self.classifier = None
         self.vectorizer = None
@@ -165,11 +165,11 @@ class LanguageNinja(App):
             with TabPane("Export", id="export"):
                 yield Static(
                     "HOW TO USE • Choose what you want to export and select CSV or JSON, then choose Export Now. "
-                    "Files are written to the project's ./exports/ directory.",
+                    "Files are written to your persistent Language Ninja exports directory.",
                     classes="instructions",
                 )
                 yield Static(
-                    "Exports are written to ./exports/\n\n"
+                    f"Application data: {APP_DIR}\nExports: {EXPORT_DIR}\n\n"
                     "Available exports:\n"
                     "• Prediction history → CSV / JSON\n"
                     "• Notes → JSON\n"

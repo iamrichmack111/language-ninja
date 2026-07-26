@@ -1,0 +1,3 @@
+textual>=0.70
+scikit-learn>=1.3
+platformdirs>=4.0

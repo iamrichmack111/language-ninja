@@ -1,0 +1,2 @@
+[console_scripts]
+language-ninja = language_ninja.app:main

@@ -1,32 +1,7 @@
-# Python
+.venv/
 __pycache__/
 *.py[cod]
-*.egg-info/
-build/
-dist/
-
-# Virtual environments
-.venv/
-venv/
-env/
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Databases
 *.db
-*.sqlite
-*.sqlite3
-
-# macOS
-.DS_Store
-
-# IDE
-.vscode/
-.idea/
-
-# Temporary files
-*.log
-*.tmp
+models/*.pkl
+exports/*
+!exports/.gitkeep

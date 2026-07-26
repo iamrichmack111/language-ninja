@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import FeatureUnion
 from sklearn.svm import LinearSVC
 
-MODEL_VERSION = "2.2"
+MODEL_VERSION = "2.2.1"
 
 
 @dataclass(slots=True)
